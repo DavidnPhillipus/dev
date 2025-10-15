@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+:root {
+  --sidebar-width: 220px;
+  --accent-green: #2e7d32;
+  --accent-green-dark: #1b5e20;
+  --card-yellow: #FBC02D;
+}
+
+/* base resets */
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #f4f9f4;
+  color: #222;
+}
+
+/* wrapper */
+.dashboard-wrapper {
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Sidebar (same style across app) */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: var(--sidebar-width);
+  background: linear-gradient(180deg, var(--accent-green), var(--accent-green-dark));
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem 1rem;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.12);
+  z-index: 40;
+  transition: transform 280ms ease;
+  overflow: visible; /* ensure profile and interactive children are fully visible */
+}
+.sidebar.open { transform: translateX(0); }
+
+/* logo & links */
+.sidebar-logo { display: flex; align-items: center; gap: .6rem; }
+.logo-icon { font-size: 1.8rem; }
+.sidebar-links { list-style: none; padding: 0; margin-top: 2.5rem; }
+.sidebar-links li {
+  display:flex; align-items:center; gap:.8rem; padding:.8rem 1rem; border-radius:10px; cursor:pointer; transition: background .2s;
+}
+.sidebar-links li.active, .sidebar-links li:hover { background: rgba(255,255,255,0.12); }
+
+.sidebar-footer {
+  /* fix: center the profile area and ensure it isn't cut off */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .25rem;
+  padding-bottom: 1rem;
+  margin-top: 1rem;
+}
+.profile-icon { font-size:2.5rem; margin-bottom:.2rem; }
+.profile-name { margin:0; font-weight:600; }
+
+/* main content */
+.main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  padding: 2rem 3rem;
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.header h1 { margin: 0; font-size: 1.6rem; color: var(--accent-green); }
+.header p { margin: .4rem 0 1.2rem; color: #666; }
+
+/* form layout */
+.add-livestock-form { width: 100%; background: transparent; }
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+/* full width fields (span both columns) */
+.form-field { display:flex; flex-direction:column; gap:.4rem; }
+.form-field-full { grid-column: 1 / -1; }
+
+.label-text { font-weight:600; color:#333; font-size:0.95rem; }
+
+/* Make form controls explicit so they don't inherit strange colors or get clipped */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select,
+textarea,
+input[type="file"] {
+  padding: .6rem .8rem;
+  border-radius: 8px;
+  border: 1px solid #e6e6e6;
+  background: #fff;
+  color: #222;               /* explicit color for readability */
+  font-size: .95rem;
+  position: relative;
+  z-index: 2;                /* helps dropdowns render above nearby elements */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+option { color: #222; background: #fff; }
+
+textarea { resize: vertical; min-height: 80px; }
+
+/* image previews */
+.image-preview-row { display:flex; gap:.5rem; margin-top:.5rem; flex-wrap:wrap; align-items:center; }
+.image-preview { width:64px; height:64px; border-radius:8px; overflow:hidden; background:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(0,0,0,0.06); }
+.image-preview img { width:100%; height:100%; object-fit:cover; }
+
+/* hint & errors */
+.hint { color:#666; font-size:.9rem; }
+.error { color: #b00020; font-size:.85rem; margin-top: .25rem; }
+
+/* actions */
+.form-actions { margin-top: 1.25rem; display:flex; gap:.8rem; align-items:center; }
+.add-btn {
+  display:inline-flex; align-items:center; gap:.6rem;
+  background: var(--card-yellow); color: var(--accent-green); border:none; padding:.7rem 1rem; border-radius:10px; font-weight:700; cursor:pointer;
+}
+.cancel-btn {
+  background: transparent; border: 1px solid #ddd; padding:.6rem 1rem; border-radius:10px; cursor:pointer;
+}
+
+/* mobile header */
+.mobile-header { display:none; position: fixed; top: 12px; left: 12px; z-index: 60; }
+.hamburger-btn { background: rgba(0,0,0,0.18); color: white; border: none; padding: .56rem; border-radius: 8px; }
+
+/* overlay */
+.mobile-overlay { display:none; }
+
+/* responsiveness */
+@media (max-width: 768px) {
+  :root { --sidebar-width: 260px; }
+  .sidebar { transform: translateX(-120%); box-shadow: 0 8px 30px rgba(0,0,0,0.35); }
+  .sidebar.open { transform: translateX(0); }
+  .mobile-header { display:block; }
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 50;
+  }
+  .mobile-overlay.show { display:block; }
+  .main { margin-left: 0; padding: 1rem; }
+
+  .form-grid { grid-template-columns: 1fr; }
+  .form-field-full { grid-column: auto; }
+
+  /* make sure selects sit above overlay/sidebar on small screens */
+  select { z-index: 9999; position: relative; }
+}
+
+/* small polish */
+input:focus, textarea:focus, select:focus { outline: 3px solid rgba(46,125,50,0.12); outline-offset: 2px; }

@@ -1,4 +1,4 @@
-import LandingPage from "./farmer";
+import LandingPage from "./AddLivestock";
 
 
 function App() {
