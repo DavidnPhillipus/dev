@@ -5,9 +5,6 @@
   --green-700: #15803d;
   --green-600: #16a34a;
   --green-100: #dcfce7;
-  --red-500: #ef4444;
-  --red-600: #dc2626;
-  --red-100: #fee2e2;
   --blue-500: #3b82f6;
   --orange-500: #f97316;
   --yellow-400: #facc15;
@@ -247,11 +244,6 @@ body {
   color: var(--green-600);
 }
 
-.badge-cancelled {
-  background: var(--red-100);
-  color: var(--red-500);
-}
-
 .order-meta {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -308,6 +300,26 @@ body {
   font-size: 0.75rem;
   color: var(--gray-600);
   margin: 0.25rem 0;
+}
+
+.order-actions {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.confirm-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  color: #fff;
+  background: var(--green-600);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.confirm-btn:hover {
+  background: var(--green-700);
 }
 
 .mobile-header {
@@ -407,5 +419,9 @@ body {
 
   .orders-grid {
     grid-template-columns: 1fr;
+  }
+
+  .order-actions {
+    text-align: center;
   }
 }

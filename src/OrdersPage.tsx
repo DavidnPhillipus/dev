@@ -16,14 +16,13 @@ interface Order {
   date: string;
   items: OrderItem[];
   total: number;
-  status: "Pending" | "Delivered" | "Cancelled";
+  status: "Pending" | "Delivered";
 }
 
 const OrdersPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [statusFilter, setStatusFilter] = useState<string>("All");
-
-  const orders: Order[] = [
+  const [orders, setOrders] = useState<Order[]>([
     {
       id: 1,
       date: "2025-10-10",
@@ -64,29 +63,23 @@ const OrdersPage: React.FC = () => {
       total: 20,
       status: "Delivered",
     },
-    {
-      id: 3,
-      date: "2025-09-28",
-      items: [
-        {
-          id: 7,
-          name: "Honey",
-          category: "Other",
-          price: "$12 / 500g",
-          quantity: 2,
-          image: "https://images.unsplash.com/photo-1505577058444-a3dab87b9f32?auto=format&fit=crop&w=800&q=80",
-        },
-      ],
-      total: 24,
-      status: "Cancelled",
-    },
-  ];
+  ]);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const closeSidebar = () => setSidebarOpen(false);
 
   const handleStatusFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatusFilter(e.target.value);
+  };
+
+  const confirmDelivery = (id: number) => {
+    setOrders(prev =>
+      prev.map(order =>
+        order.id === id && order.status === "Pending"
+          ? { ...order, status: "Delivered" }
+          : order
+      )
+    );
   };
 
   const filteredOrders = statusFilter === "All"
@@ -155,7 +148,6 @@ const OrdersPage: React.FC = () => {
             <option value="All">All Statuses</option>
             <option value="Pending">Pending</option>
             <option value="Delivered">Delivered</option>
-            <option value="Cancelled">Cancelled</option>
           </select>
         </section>
 
@@ -197,6 +189,16 @@ const OrdersPage: React.FC = () => {
                       </div>
                     ))}
                   </div>
+                  {order.status === "Pending" && (
+                    <div className="order-actions">
+                      <button
+                        className="confirm-btn"
+                        onClick={() => confirmDelivery(order.id)}
+                      >
+                        Confirm Delivery
+                      </button>
+                    </div>
+                  )}
                 </article>
               ))}
             </div>

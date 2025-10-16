@@ -1,25 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaBars } from "react-icons/fa";
 import "./LandingPage.css";
 
-const LandingPage = () => {
+const LandingPage: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <div className="landing">
-      {/* ===== NAVBAR ===== */}
+    <div className="landing-container">
       <nav className="navbar">
         <div className="logo">
           <span className="logo-icon">🌿</span> FarmSmart
         </div>
-        <ul className="nav-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#why">Why FarmSmart</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#login" className="login-btn">Login</a></li>
+        <button className="hamburger-btn" onClick={toggleMenu}>
+          <FaBars size={20} />
+        </button>
+        <ul className={`nav-links ${menuOpen ? "open" : ""}`}>
+          <li><a href="#home" onClick={closeMenu}>Home</a></li>
+          <li><a href="#about" onClick={closeMenu}>About</a></li>
+          <li><a href="#features" onClick={closeMenu}>Features</a></li>
+          <li><a href="#why" onClick={closeMenu}>Why FarmSmart</a></li>
+          <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
+          <li><a href="#login" className="login-btn" onClick={closeMenu}>Login</a></li>
         </ul>
       </nav>
 
-      {/* ===== HERO SECTION ===== */}
       <section className="hero" id="home">
         <div className="hero-content">
           <h1>Manage. Track. Sell. All in One Place.</h1>
@@ -36,17 +43,16 @@ const LandingPage = () => {
         </div>
         <div className="hero-image">
           <img
-            src="https://images.pexels.com/photos/93398/pexels-photo-93398.jpeg"
+            src="https://images.unsplash.com/photo-1500595046743-ff22c0ab6d24?auto=format&fit=crop&w=800&q=80"
             alt="Farmer using tablet"
           />
         </div>
       </section>
 
-      {/* ===== ABOUT SECTION ===== */}
       <section className="about" id="about">
         <div className="about-image">
           <img
-            src="https://images.pexels.com/photos/265216/pexels-photo-265216.jpeg"
+            src="https://images.unsplash.com/photo-1581290964856-87d87d6e399b?auto=format&fit=crop&w=800&q=80"
             alt="Fresh produce"
           />
         </div>
@@ -66,7 +72,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* ===== FEATURES SECTION ===== */}
       <section className="features" id="features">
         <h2>Features</h2>
         <div className="feature-grid">
@@ -97,30 +102,32 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* ===== HOW IT WORKS ===== */}
       <section className="how" id="how">
         <h2>How It Works</h2>
         <div className="steps">
           <div className="step">
-            <span className="icon">1️⃣</span>
-            <p>Register your account as a Farmer or Buyer.</p>
+            <span className="icon">1</span>
+            <h4>Register</h4>
+            <p>Sign up as a Farmer or Buyer.</p>
           </div>
           <div className="step">
-            <span className="icon">2️⃣</span>
-            <p>Farmers add products or livestock with details.</p>
+            <span className="icon">2</span>
+            <h4>Add Products</h4>
+            <p>Farmers list their crops or livestock.</p>
           </div>
           <div className="step">
-            <span className="icon">3️⃣</span>
-            <p>Buyers browse listings and make purchases.</p>
+            <span className="icon">3</span>
+            <h4>Browse & Buy</h4>
+            <p>Buyers explore and purchase products.</p>
           </div>
           <div className="step">
-            <span className="icon">4️⃣</span>
-            <p>Track your sales and farm progress via dashboard.</p>
+            <span className="icon">4</span>
+            <h4>Track Progress</h4>
+            <p>Monitor sales and farm data via dashboards.</p>
           </div>
         </div>
       </section>
 
-      {/* ===== WHY FARMSMART ===== */}
       <section className="why" id="why">
         <div className="why-text">
           <h2>Why Choose FarmSmart?</h2>
@@ -139,20 +146,18 @@ const LandingPage = () => {
         </div>
         <div className="why-image">
           <img
-            src="https://images.pexels.com/photos/296230/pexels-photo-296230.jpeg"
+            src="https://images.unsplash.com/photo-1501523460185-2aa5b82f5a32?auto=format&fit=crop&w=800&q=80"
             alt="Farmer with produce"
           />
         </div>
       </section>
 
-      {/* ===== CTA SECTION ===== */}
       <section className="cta" id="contact">
-        <h2>Take control of your farm operations today.</h2>
-        <p>Join thousands of farmers using FarmSmart to grow smarter.</p>
-        <button className="btn btn-light">Join as a Farmer</button>
+        <h2>Take Control of Your Farm Today</h2>
+        <p>Join thousands of farmers and buyers using FarmSmart to grow smarter.</p>
+        <button className="btn btn-primary">Join FarmSmart</button>
       </section>
 
-      {/* ===== FOOTER ===== */}
       <footer>
         <p>© 2025 FarmSmart. All rights reserved.</p>
       </footer>
